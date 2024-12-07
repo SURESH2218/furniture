@@ -11,6 +11,7 @@ export const createUser = async (email, password, name) => {
         password: hashedPassword,
         name,
         role: "CUSTOMER",
+        refreshToken: generateRefreshToken({ email, name }),
       },
     });
     return user;
@@ -29,6 +30,18 @@ export const findUserByEmail = async (email) => {
     return user;
   } catch (error) {
     throw new Error(`Error finding user by email: ${error.message}`);
+  }
+};
+
+export const updateRefreshToken = async (email, refreshToken) => {
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { email },
+      data: { refreshToken },
+    });
+    return updatedUser;
+  } catch (error) {
+    throw new Error("Error while updating the refreshToken" + error.message);
   }
 };
 
