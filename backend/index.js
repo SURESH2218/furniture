@@ -24,6 +24,10 @@ app.get("/", (req, res) => {
   res.json({ message: "Wood Furniture Backend Running" });
 });
 
+import userRouter from "./routes/user.route.js";
+
+app.use("/users", userRouter);
+
 const connectDB = async () => {
   try {
     await prisma.$connect();
