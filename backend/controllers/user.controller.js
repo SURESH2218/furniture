@@ -3,6 +3,7 @@ import {
   findUserByEmail,
   generateAccessToken,
   generateRefreshToken,
+  updateRefreshToken,
   validUser,
 } from "../models/User.js";
 import ApiResponse from "../utils/ApiResponse.js";
@@ -63,6 +64,8 @@ export const userLogin = asyncHandler(async (req, res) => {
 
     const accessToken = generateAccessToken(findUser);
     const refreshToken = generateRefreshToken(findUser);
+
+    await updateRefreshToken(email, refreshToken);
 
     res.status(200).json(
       ApiResponse(200, {
