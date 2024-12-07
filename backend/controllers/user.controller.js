@@ -65,22 +65,57 @@ export const userLogin = asyncHandler(async (req, res) => {
     const accessToken = generateAccessToken(findUser);
     const refreshToken = generateRefreshToken(findUser);
 
-    await updateRefreshToken(email, refreshToken);
+    await updateRefreshToken(findUser.email, refreshToken);
 
-    res.status(200).json(
-      ApiResponse(200, {
-        user: {
-          id: findUser.id,
-          email: findUser.email,
-          name: findUser.name,
-          role: findUser.role,
-        },
-        accessToken,
-        refreshToken,
-      })
-    );
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      sameSite: "Strict",
+    };
+
+    res
+      .status(200)
+      .cookie("accessToken", accessToken, cookieOptions)
+      .cookie("refreshToken", refreshToken, cookieOptions)
+      .json(
+        ApiResponse(200, {
+          user: {
+            id: findUser.id,
+            email: findUser.email,
+            name: findUser.name,
+            role: findUser.role,
+          },
+          accessToken,
+          refreshToken,
+        })
+      );
   } catch (error) {
     console.error("Login error:", error);
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Something went wrong.",
+    });
+  }
+});
+
+export const logoutUser = asyncHandler(async (req, res) => {
+  try {
+    await updateRefreshToken(req.user.email, null);
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    };
+
+    return res
+      .status(200)
+      .clearCookie("accessToken", cookieOptions)
+      .clearCookie("refreshToken", cookieOptions)
+      .json(ApiResponse(200, {}, "User logged out successfully"));
+  } catch (error) {
+    console.error("Logout error:", error);
     res.status(error.statusCode || 500).json({
       success: false,
       message: error.message || "Something went wrong.",
