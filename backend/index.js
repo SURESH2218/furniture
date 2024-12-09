@@ -25,8 +25,10 @@ app.get("/", (req, res) => {
 });
 
 import userRouter from "./routes/user.route.js";
+import adminRouter from "./routes/admin.route.js";
 
 app.use("/users", userRouter);
+app.use("/admin", adminRouter);
 
 const connectDB = async () => {
   try {
