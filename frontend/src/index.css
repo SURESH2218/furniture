@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
-    --primary : white;
-    --secondary: beige;
-    --primary-foreground: beige;
-    --secondary-foreground: black;
+:root {
+  --primary: white;
+  --secondary: beige;
+  --primary-foreground: beige;
+  --secondary-foreground: black;
 }
