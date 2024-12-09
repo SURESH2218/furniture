@@ -1,9 +1,15 @@
+import { BrowserRouter, Route, Routes } from "react-router";
+import Home from './pages/home'
+import Shop from './pages/shop'
 function App() {
   return (
     <>
-      <div>
-        <h1 className="">Furniture images loading.......</h1>
-      </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />}/>
+        <Route path="/shop" element={<Shop />}/>
+      </Routes>
+      </BrowserRouter>
     </>
   );
 }

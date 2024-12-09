@@ -1,0 +1,9 @@
+html{
+    color: white;
+}
+
+h1,h2,h3{
+    font-family: "Bree Serif", serif;
+    font-weight: 400;
+    font-style: normal;
+}
