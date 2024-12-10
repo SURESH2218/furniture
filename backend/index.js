@@ -26,9 +26,11 @@ app.get("/", (req, res) => {
 
 import userRouter from "./routes/user.route.js";
 import adminRouter from "./routes/admin.route.js";
+import uploadImage from "./routes/imageupload.routes.js";
 
 app.use("/users", userRouter);
 app.use("/admin", adminRouter);
+app.use("/image", uploadImage);
 
 const connectDB = async () => {
   try {
