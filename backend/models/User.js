@@ -2,6 +2,14 @@ import prisma from "../prisma/client.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+export const isPasswordValid = async (password, hashedPassword) => {
+  try {
+    return await bcrypt.compare(password, hashedPassword);
+  } catch (error) {
+    throw new Error("Error comparing passwords: " + error.message);
+  }
+};
+
 export const createUser = async (email, password, name) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -58,9 +66,12 @@ export const validUser = async (email, password) => {
       return null;
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValidResult = await isPasswordValid(
+      password,
+      user.password
+    );
 
-    if (!isPasswordValid) {
+    if (!isPasswordValidResult) {
       return null;
     }
     return user;
