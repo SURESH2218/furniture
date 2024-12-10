@@ -3,6 +3,7 @@ import {
   findUserByEmail,
   generateAccessToken,
   generateRefreshToken,
+  isPasswordValid,
   updateRefreshToken,
   validUser,
 } from "../models/User.js";
@@ -165,5 +166,44 @@ export const updateProfile = asyncHandler(async (req, res) => {
     throw ApiError(500, `Error updating profile: ${error.message}`);
   }
 });
+
+export const changePassword = asyncHandler(async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const { user } = req;
+
+  if (!currentPassword || !newPassword) {
+    throw ApiError(400, "Both current password and new password are required");
+  }
+
+  const existingUser = await findUserByEmail(user.email);
+
+  if (!existingUser) {
+    throw ApiError(404, "User not found");
+  }
+
+  const isMatch = await isPasswordValid(currentPassword, existingUser.password);
+  if (!isMatch) {
+    throw ApiError(401, "Current password is incorrect");
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  await updatePassword(user.email, hashedPassword);
+
+  return res
+    .status(200)
+    .json(ApiResponse(200, {}, "Password Updated Successfully"));
+});
+
+export const updatePassword = async (email, hashedPassword) => {
+  try {
+    await prisma.user.update({
+      where: { email },
+      data: { password: hashedPassword },
+    });
+  } catch (error) {
+    throw new Error(`Error updating password: ${error.message}`);
+  }
+};
 
 export default userRegister;
