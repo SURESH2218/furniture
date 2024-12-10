@@ -9,6 +9,7 @@ import {
 import ApiResponse from "../utils/ApiResponse.js";
 import ApiError from "../utils/ApiError.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import prisma from "../prisma/client.js";
 
 const userRegister = asyncHandler(async (req, res) => {
   const { email, password, name } = req.body;
@@ -120,6 +121,48 @@ export const logoutUser = asyncHandler(async (req, res) => {
       success: false,
       message: error.message || "Something went wrong.",
     });
+  }
+});
+
+export const updateProfile = asyncHandler(async (req, res) => {
+  try {
+    const { phone, address, city, state, country, postalCode } = req.body;
+    const existingProfile = await prisma.profile.findUnique({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    const updateData = Object.fromEntries(
+      Object.entries({
+        phone,
+        address,
+        city,
+        state,
+        country,
+        postalCode,
+      }).filter(([_, value]) => value !== undefined && value !== null)
+    );
+
+    if (existingProfile) {
+      const updatedProfile = await prisma.profile.update({
+        where: { userId: req.user.id },
+        data: updateData,
+      });
+
+      return res
+        .status(200)
+        .json(ApiResponse(200, updatedProfile, "Profile updated successfully"));
+    } else {
+      const newProfile = await prisma.profile.create({
+        data: { userId: req.user.id, ...updateData },
+      });
+
+      return res
+        .status(201)
+        .json(ApiResponse(200, newProfile, "Profile created Successfully"));
+    }
+  } catch (error) {
+    throw ApiError(500, `Error updating profile: ${error.message}`);
   }
 });
 
