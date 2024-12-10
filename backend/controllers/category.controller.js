@@ -25,3 +25,16 @@ export const createCategory = asyncHandler(async (req, res) => {
       .json({ error: `Error creating category: ${error.message}` });
   }
 });
+
+export const getCategories = asyncHandler(async (req, res) => {
+  try {
+    const categories = await prisma.category.findMany();
+    return res
+      .status(200)
+      .json(ApiResponse(200, categories, "categories fetched successfully"));
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: `Error fetching categories: ${error.message}` });
+  }
+});
