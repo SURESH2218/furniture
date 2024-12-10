@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import prisma from "../prisma/client.js";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
 
 const createAdminAccount = async () => {
   const email = process.env.ADMIN_EMAIL;
@@ -25,23 +27,21 @@ const createAdminAccount = async () => {
 export const authorizeRoles = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return next(
-        new ApiError(403, "Access denied. Insufficient permissions.")
-      );
+      return next(ApiError(403, "Access denied. Insufficient permissions."));
     }
     next();
   };
 };
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (req, res) => {
   try {
     const users = await prisma.user.findMany();
     const customers = await users.filter(
       (customer) => customer.role !== "ADMIN"
     );
     // console.log(customers);
-    return customers;
+    return res.status(200).json(200, customers);
   } catch (error) {
-    throw new Error(`Error fetching users: ${error.message}`);
+    throw ApiError(500, `Error fetching users: ${error.message}`);
   }
 };

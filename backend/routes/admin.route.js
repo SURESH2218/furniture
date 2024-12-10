@@ -7,8 +7,6 @@ import {
 
 const router = Router();
 
-router
-  .route("/all-users")
-  .post(verifyJWT, authorizeRoles("ADMIN"), getAllUsers);
+router.route("/users").get(verifyJWT, authorizeRoles("ADMIN"), getAllUsers);
 
 export default router;
