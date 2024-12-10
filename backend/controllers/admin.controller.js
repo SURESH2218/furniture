@@ -40,7 +40,7 @@ export const getAllUsers = async (req, res) => {
       (customer) => customer.role !== "ADMIN"
     );
     // console.log(customers);
-    return res.status(200).json(200, customers);
+    return res.status(200).json(ApiResponse(200, customers));
   } catch (error) {
     throw ApiError(500, `Error fetching users: ${error.message}`);
   }
