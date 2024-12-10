@@ -206,4 +206,32 @@ export const updatePassword = async (email, hashedPassword) => {
   }
 };
 
+export const getUserDetails = asyncHandler(async (req, res) => {
+  try {
+    const { user } = req;
+    const userDetails = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      profile: user.profile,
+      reviews: user.reviews,
+      wishlist: user.wishlist,
+      orders: user.orders,
+    };
+
+    if (!userDetails) {
+      throw ApiError(404, "User not found");
+    }
+
+    return res
+      .status(200)
+      .json(ApiResponse(200, userDetails, "User Details Fetched Successfully"));
+  } catch (error) {
+    throw ApiError(401, "Unauthorized");
+  }
+});
+
 export default userRegister;

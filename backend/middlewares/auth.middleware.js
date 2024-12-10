@@ -23,6 +23,12 @@ export const verifyJWT = asyncHandler(async (req, _, next) => {
         name: true,
         role: true,
         refreshToken: true,
+        profile: true,
+        createdAt: true,
+        updatedAt: true,
+        reviews: true,
+        wishlist: true,
+        orders: true,
       },
     });
 
