@@ -26,18 +26,29 @@ const userRegister = asyncHandler(async (req, res) => {
     const accessToken = generateAccessToken(newUser);
     const refreshToken = generateRefreshToken(newUser);
 
-    return res.status(201).json(
-      ApiResponse(201, {
-        user: {
-          id: newUser.id,
-          email: newUser.email,
-          name: newUser.name,
-          role: newUser.role,
-        },
-        accessToken,
-        refreshToken,
-      })
-    );
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    };
+
+    res
+      .status(200)
+      .cookie("accessToken", accessToken, cookieOptions)
+      .cookie("refreshToken", refreshToken, cookieOptions)
+      .json(
+        ApiResponse(201, {
+          user: {
+            id: newUser.id,
+            email: newUser.email,
+            name: newUser.name,
+            role: newUser.role,
+          },
+          accessToken,
+          refreshToken,
+        })
+      );
   } catch (error) {
     if (error.statusCode) {
       return res.status(error.statusCode).json({
@@ -71,9 +82,9 @@ export const userLogin = asyncHandler(async (req, res) => {
 
     const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 30 * 24 * 60 * 60 * 1000,
+      secure: true,
       sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     };
 
     res
@@ -107,7 +118,7 @@ export const logoutUser = asyncHandler(async (req, res) => {
 
     const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       sameSite: "Strict",
     };
 
