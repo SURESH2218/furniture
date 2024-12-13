@@ -5,7 +5,10 @@ export default function Shop() {
   return (
     <div className='w-[100vw] h-[100vh] relative overflow-x-hidden hidden-scrollbar'>
       <div className='w-full h-[10vh] bg-black sticky top-0 flex justify-between items-center px-[20px] relative'>
-        <h1 onClick={() => navigate('/')} className='cursor-pointer text-[24px]'>
+        <h1
+          onClick={() => navigate('/')}
+          className='cursor-pointer text-[24px]'
+        >
           SREE SAI BALAJI WOOD WORKS
         </h1>
         <div className='w-[30%] absolute left-1/2 -translate-x-1/2'>
@@ -43,7 +46,7 @@ export default function Shop() {
       </div>
       <div className='w-full h-[200vh] bg-gray-800 p-[20px]'>
         <div className='w-full bg-black/20 h-[500px] rounded-md flex items-center justify-center'>
-            Furniture Carousel
+          Furniture Carousel
         </div>
       </div>
     </div>
