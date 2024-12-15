@@ -6,9 +6,9 @@ import { ChevronRight } from 'lucide-react';
 export default function Landing() {
   const navigate = useNavigate();
   return (
-    <div className='bg-inherit w-full h-[70%] relative flex justify-center items-center'>
+    <div className='bg-inherit w-[100vw] h-[70%] p-[2%] relative flex justify-center items-center'>
       <div
-        className='absolute w-[96%] h-[90%] rounded-md z-10'
+        className=' w-full h-full rounded-md z-10'
         style={{
           backgroundImage: `url(${sofa})`,
           backgroundPosition: 'center',
@@ -23,7 +23,7 @@ export default function Landing() {
           backdropFilter: 'blur(2.5px)',
         }}
       ></div>
-      <div className='z-20 w-[96%] h-[90%] grid grid-cols-2'>
+      <div className='absolute z-20 w-full h-full grid grid-cols-2 p-[5%]'>
         <div className='col-span-1 relative'>
           <div className=' flex flex-col gap-2 absolute top-[25%] left-[10%]  '>
             <h1

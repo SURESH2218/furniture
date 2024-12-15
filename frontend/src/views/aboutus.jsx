@@ -1,7 +1,7 @@
 import displayImg from '../assets/images/chair-2.jpg';
 export default function Aboutus() {
   return (
-    <div className='relative w-full h-[100vh] py-[5%] flex justify-center items-center'>
+    <div className='relative w-[100vw] h-[100vh] py-[5%] flex justify-center items-center'>
       <div className='w-full h-full grid grid-cols-2'>
         <div className='col-span-1 flex justify-center items-center pl-[5%]'>
           <div className='flex flex-col gap-10 w-[80%] '>
@@ -24,9 +24,13 @@ export default function Aboutus() {
           </div>
         </div>
         <div className='col-span-1 relative flex items-center justify-center '>
-          <div className="w-[70%] h-[90%] relative bg-blue-200 rounded-md overflow-hidden">
+          <div className='w-[70%] h-[90%] relative bg-blue-200 rounded-md overflow-hidden'>
             <div className='w-full h-full bg-black/40 absolute z-20'></div>
-            <img src={displayImg} alt="aboutsus" className='w-full h-full absolute object-cover z-10' />
+            <img
+              src={displayImg}
+              alt='aboutsus'
+              className='w-full h-full absolute object-cover z-10'
+            />
           </div>
         </div>
       </div>
