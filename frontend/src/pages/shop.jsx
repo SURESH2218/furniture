@@ -4,7 +4,7 @@ export default function Shop() {
   const navigate = useNavigate();
   return (
     <div className='w-[100vw] h-[100vh] relative overflow-x-hidden hidden-scrollbar'>
-      <div className='w-full h-[10vh] bg-black sticky top-0 flex justify-between items-center px-[20px] relative'>
+      <div className='w-full h-[10vh] bg-black sticky top-0 flex justify-between items-center px-[20px]'>
         <h1
           onClick={() => navigate('/')}
           className='cursor-pointer text-[24px]'
@@ -13,7 +13,7 @@ export default function Shop() {
         </h1>
         <div className='w-[30%] absolute left-1/2 -translate-x-1/2'>
           <input
-            type='search'
+            type='text'
             name='search'
             id='search'
             placeholder='search for items...'
@@ -40,7 +40,7 @@ export default function Shop() {
               strokeWidth={1.5}
               className='hover:text-cyan-200 transition-colors duration-500'
             />
-            <p>Log In</p>
+            <p onClick={()=> navigate('/auth')} className='cursor-pointer'>Log In</p>
           </div>
         </div>
       </div>
