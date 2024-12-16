@@ -1,6 +1,7 @@
-import prisma from "@prisma/client";
-import ApiResponse from "../utils/ApiResponse";
-import ApiError from "../utils/ApiError";
+import prisma from "../prisma/client.js";
+import ApiResponse from "../utils/ApiResponse.js";
+import ApiError from "../utils/ApiError.js";
+import asyncHandler from "../utils/asyncHandler.js";
 
 export const createCategory = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
