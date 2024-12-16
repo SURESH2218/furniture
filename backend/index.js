@@ -29,11 +29,13 @@ import adminRouter from "./routes/admin.route.js";
 // import uploadImage from "./routes/imageupload.routes.js";
 import productsRouter from "./routes/product.routes.js";
 import categoryRouter from "./routes/category.routes.js";
+import wishlistRouter from "./routes/wishlist.routes.js";
 
 app.use("/users", userRouter);
 app.use("/admin", adminRouter);
 app.use("/product", productsRouter);
 app.use("/category", categoryRouter);
+app.use("/wishlist", wishlistRouter);
 // app.use("/image", uploadImage);
 
 const connectDB = async () => {
