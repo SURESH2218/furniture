@@ -12,3 +12,5 @@ router
   .route("/create-category")
   .post(verifyJWT, authorizeRoles("ADMIN"), createCategory);
 router.route("/get-categories").get(getCategories);
+
+export default router;
