@@ -40,7 +40,9 @@ export default function Shop() {
               strokeWidth={1.5}
               className='hover:text-cyan-200 transition-colors duration-500'
             />
-            <p onClick={()=> navigate('/auth')} className='cursor-pointer'>Log In</p>
+            <p onClick={() => navigate('/auth')} className='cursor-pointer'>
+              Log In
+            </p>
           </div>
         </div>
       </div>
