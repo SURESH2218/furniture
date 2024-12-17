@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import {
+  loginSuccess,
+  loginFailure,
+  loginStart,
+} from '../../redux/slices/authSlice';
 
 const Authentication = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -9,27 +15,29 @@ const Authentication = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (!isSignInForm) {
-        const { data } = await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/users/register`,
-          {
-            name,
-            email,
-            password,
-          },
-          {
-            withCredentials: true,
-          }
-        );
-        setName('');
-        setEmail('');
-        setPassword('');
-        navigate('/');
-      } else {
+
+    if (!isSignInForm) {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/users/register`,
+        {
+          name,
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      setName('');
+      setEmail('');
+      setPassword('');
+      navigate('/');
+    } else {
+      try {
         const { data } = await axios.post(
           `${import.meta.env.VITE_BACKEND_URL}/users/login`,
           {
@@ -40,13 +48,18 @@ const Authentication = () => {
             withCredentials: true,
           }
         );
+        dispatch(loginSuccess(data.data.user));
+        if (data.data.user === 'ADMIN') {
+          navigate('/admin/dashboard');
+        } else {
+          navigate('/dashboard');
+        }
         setEmail('');
         setPassword('');
-        navigate('/');
+      } catch (error) {
+        setError(error.response.data.message);
+        dispatch(loginFailure(error.response.data.message));
       }
-    } catch (err) {
-      setError(err.response?.data?.message || 'An error occurred');
-      console.error('Authentication error:', err);
     }
   };
 
