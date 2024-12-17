@@ -30,12 +30,14 @@ import adminRouter from "./routes/admin.route.js";
 import productsRouter from "./routes/product.routes.js";
 import categoryRouter from "./routes/category.routes.js";
 import wishlistRouter from "./routes/wishlist.routes.js";
+import orderRouter from "./routes/order.routes.js";
 
 app.use("/users", userRouter);
 app.use("/admin", adminRouter);
 app.use("/product", productsRouter);
 app.use("/category", categoryRouter);
 app.use("/wishlist", wishlistRouter);
+app.use("/api", orderRouter);
 // app.use("/image", uploadImage);
 
 const connectDB = async () => {
