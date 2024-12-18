@@ -1,7 +1,19 @@
 import { ShoppingCart, CircleUser, Search } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../store/slices/authSlice';
 export default function Shop() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser()).unwrap();
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
   return (
     <div className='w-[100vw] h-[100vh] relative overflow-x-hidden hidden-scrollbar'>
       <div className='w-full h-[10vh] bg-black sticky top-0 flex justify-between items-center px-[20px]'>
@@ -40,8 +52,13 @@ export default function Shop() {
               strokeWidth={1.5}
               className='hover:text-cyan-200 transition-colors duration-500'
             />
-            <p onClick={() => navigate('/auth')} className='cursor-pointer'>
-              Log In
+            <p
+              onClick={
+                isAuthenticated ? handleLogout : () => navigate('/login')
+              }
+              className='cursor-pointer'
+            >
+              {isAuthenticated ? 'logout' : 'login'}
             </p>
           </div>
         </div>
