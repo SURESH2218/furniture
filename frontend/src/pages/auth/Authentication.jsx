@@ -1,132 +1,133 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import api from '../../utils/api';
 import {
+  loginStart,
   loginSuccess,
   loginFailure,
-  loginStart,
+  registerStart,
+  registerSuccess,
+  registerFailure,
 } from '../../redux/slices/authSlice';
 
 const Authentication = () => {
-  const [isSignInForm, setIsSignInForm] = useState(true);
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [isRegistering, setIsRegistering] = useState(false);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isAuthenticated, isLoading, error } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isSignInForm) {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/users/register`,
-        {
-          name,
+    try {
+      if (isRegistering) {
+        dispatch(registerStart());
+        await api.post('/users/register', {
           email,
           password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      setName('');
-      setEmail('');
-      setPassword('');
-      navigate('/');
-    } else {
-      try {
-        const { data } = await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/users/login`,
-          {
-            email,
-            password,
-          },
-          {
-            withCredentials: true,
-          }
-        );
-        dispatch(loginSuccess(data.data.user));
-        if (data.data.user === 'ADMIN') {
-          navigate('/admin/dashboard');
-        } else {
-          navigate('/dashboard');
-        }
-        setEmail('');
-        setPassword('');
-      } catch (error) {
-        setError(error.response.data.message);
-        dispatch(loginFailure(error.response.data.message));
+        });
+        dispatch(registerSuccess());
+        navigate('/');
+      } else {
+        dispatch(loginStart());
+        const response = await api.post('/users/login', {
+          email,
+          password,
+        });
+        dispatch(loginSuccess(response.data.data.user));
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      if (isRegistering) {
+        dispatch(registerFailure(errorMessage));
+      } else {
+        dispatch(loginFailure(errorMessage));
       }
     }
   };
 
-  const toggleButton = () => {
-    setIsSignInForm(!isSignInForm);
-    setError('');
-  };
-
   return (
-    <div className='relative min-h-screen bg-gray-800'>
-      <div>
-        <img
-          className='absolute object-cover w-full h-full'
-          src='https://img.freepik.com/free-photo/mid-century-modern-living-room-interior-design-with-monstera-tree_53876-129804.jpg?t=st=1733988938~exp=1733992538~hmac=3282c67894cd1f5af5e8800f095bb4d2c8a00a169c38e3591c5ba2be38f7df8c&w=996'
-          alt='Background'
-        />
-      </div>
-      <form
-        onSubmit={handleSubmit}
-        className='w-3/12 bg-black absolute left-0 right-0 my-36 mx-auto p-7 rounded-md bg-opacity-80'
-      >
-        <h1 className='font-bold text-white text-2xl pb-2'>
-          {isSignInForm ? 'Sign In' : 'Sign Up'}
-        </h1>
+    <div className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
+      <div className='max-w-md w-full space-y-8'>
+        <div>
+          <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
+            {isRegistering ? 'Create your account' : 'Sign in to your account'}
+          </h2>
+        </div>
+        <form className='mt-8 space-y-6' onSubmit={handleSubmit}>
+          <input type='hidden' name='remember' value='true' />
+          <div className='rounded-md shadow-sm -space-y-px'>
+            <div>
+              <label htmlFor='email-address' className='sr-only'>
+                Email address
+              </label>
+              <input
+                id='email-address'
+                name='email'
+                type='email'
+                autoComplete='email'
+                required
+                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                placeholder='Email address'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor='password' className='sr-only'>
+                Password
+              </label>
+              <input
+                id='password'
+                name='password'
+                type='password'
+                autoComplete='current-password'
+                required
+                className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+                placeholder='Password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
 
-        {!isSignInForm && (
-          <input
-            type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder='Full Name'
-            className='p-2 my-2 w-full rounded text-black'
-            required
-          />
-        )}
-        <input
-          type='text'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder='Email or phone number'
-          className='p-2 my-2 w-full rounded text-black'
-          required
-        />
-        <input
-          type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder='Password'
-          className='p-2 my-2 w-full rounded text-black'
-          required
-        />
-        <button
-          className='p-2 my-4 w-full bg-red-600 rounded text-white'
-          type='submit'
-        >
-          {isSignInForm ? 'Sign In' : 'Sign Up'}
-        </button>
-        <p
-          className='text-white font-bold py-4 cursor-pointer hover:text-blue-400'
-          onClick={toggleButton}
-        >
-          {isSignInForm
-            ? "Don't have an account? Sign Up Now"
-            : 'Already registered? Sign In Now'}
-        </p>
-        {error && <p className='text-red-500 mt-2'>{error}</p>}
-      </form>
+          {error && (
+            <p className='mt-2 text-center text-sm text-red-600'>{error}</p>
+          )}
+
+          <div>
+            <button
+              type='submit'
+              className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+            >
+              {isRegistering ? 'Register' : 'Sign in'}
+            </button>
+          </div>
+        </form>
+        <div className='text-center'>
+          <button
+            onClick={() => setIsRegistering(!isRegistering)}
+            className='text-sm text-indigo-600 hover:text-indigo-500'
+          >
+            {isRegistering
+              ? 'Already have an account? Sign in'
+              : "Don't have an account? Register"}
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
