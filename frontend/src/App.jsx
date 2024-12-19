@@ -49,18 +49,8 @@ function App() {
               isAuthenticated ? <Navigate to='/home' replace /> : <Register />
             }
           />
-          <Route
-            path='/home'
-            element={
-              isAuthenticated ? <Home /> : <Navigate to='/login' replace />
-            }
-          />
-          <Route
-            path='/'
-            element={
-              <Navigate to={isAuthenticated ? '/home' : '/login'} replace />
-            }
-          />
+          <Route path='/' element={<Navigate to={'/home'} />} />
+          <Route path='/home' element={<Home />} />
           <Route path='/shop' element={<Shop />} />
           <Route path='*' element={<h1>Page not found</h1>} />
         </Routes>
