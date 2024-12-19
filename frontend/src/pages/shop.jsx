@@ -9,7 +9,7 @@ export default function Shop() {
   const handleLogout = async () => {
     try {
       await dispatch(logoutUser()).unwrap();
-      navigate('/login');
+      navigate('/');
     } catch (error) {
       console.error('Logout failed:', error);
     }
