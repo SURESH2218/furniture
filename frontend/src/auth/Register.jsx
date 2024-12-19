@@ -32,7 +32,7 @@ const Register = () => {
     try {
       const { confirmPassword, ...userData } = formData;
       await dispatch(registerUser(userData)).unwrap();
-      navigate('/dashboard');
+      navigate('/home');
     } catch (error) {
       console.error('Registration failed:', error);
       alert(error.message || 'Registration failed');
@@ -51,7 +51,7 @@ const Register = () => {
               name='username'
               value={formData.username}
               onChange={handleChange}
-              className='w-full px-3 py-2 border rounded-md'
+              className='w-full px-3 py-2 border rounded-md text-black'
               required
             />
           </div>
@@ -62,7 +62,7 @@ const Register = () => {
               name='email'
               value={formData.email}
               onChange={handleChange}
-              className='w-full px-3 py-2 border rounded-md'
+              className='w-full px-3 py-2 border rounded-md text-black'
               required
             />
           </div>
@@ -73,7 +73,7 @@ const Register = () => {
               name='password'
               value={formData.password}
               onChange={handleChange}
-              className='w-full px-3 py-2 border rounded-md'
+              className='w-full px-3 py-2 border rounded-md text-black'
               required
             />
           </div>
@@ -84,7 +84,7 @@ const Register = () => {
               name='confirmPassword'
               value={formData.confirmPassword}
               onChange={handleChange}
-              className='w-full px-3 py-2 border rounded-md'
+              className='w-full px-3 py-2 border rounded-md text-black'
               required
             />
           </div>
