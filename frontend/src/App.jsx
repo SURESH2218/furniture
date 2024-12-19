@@ -22,8 +22,16 @@ function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(verifyAuth());
-  }, []);
+    const persistedAuth = localStorage.getItem('persist:root');
+    if (persistedAuth) {
+      const parsedAuth = JSON.parse(persistedAuth);
+      const authState = JSON.parse(parsedAuth.auth);
+      if (authState.isAuthenticated) {
+        // console.log('useEffect called');
+        dispatch(verifyAuth());
+      }
+    }
+  }, [dispatch]);
 
   return (
     <PersistGate loading={null} persistor={persistor}>
@@ -54,6 +62,7 @@ function App() {
             }
           />
           <Route path='/shop' element={<Shop />} />
+          <Route path='*' element={<h1>Page not found</h1>} />
         </Routes>
       </Router>
     </PersistGate>
