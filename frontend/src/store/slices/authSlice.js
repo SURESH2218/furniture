@@ -1,14 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-const API_URL = 'http://localhost:3000/users';
+import api from '../../services/api';
 
 export const loginUser = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${API_URL}/login`,
+      const response = await api.post(
+        '/login',
         { email, password },
         {
           withCredentials: true,
@@ -25,9 +23,10 @@ export const registerUser = createAsyncThunk(
   'auth/register',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/register`, userData, {
+      const response = await api.post('/register', userData, {
         withCredentials: true,
       });
+      console.log(response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -41,8 +40,8 @@ export const logoutUser = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      await axios.post(
-        `${API_URL}/logout`,
+      await api.post(
+        '/logout',
         {},
         {
           withCredentials: true,
@@ -59,7 +58,7 @@ export const verifyAuth = createAsyncThunk(
   'auth/verify',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/check-auth`, {
+      const response = await api.get('/check-auth', {
         withCredentials: true,
       });
       return response.data;
@@ -104,7 +103,7 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = true;
-        state.user = action.payload.user;
+        state.user = action.payload.data.user;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -117,11 +116,16 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
       })
 
+      .addCase(verifyAuth.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(verifyAuth.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
       })
       .addCase(verifyAuth.rejected, (state) => {
+        state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
       });
