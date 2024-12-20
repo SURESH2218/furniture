@@ -13,7 +13,7 @@ import { persistor } from './store/store';
 
 import Login from './auth/Login';
 import Register from './auth/Register';
-import Profile from './pages/user/Profile';
+// import Profile from './pages/user/Profile';
 import ProductList from './pages/public/ProductLIst';
 import ProductDetails from './pages/public/ProductDetails';
 import { PrivateRoute } from './routes/PrivateRoute';
@@ -45,7 +45,7 @@ function App() {
           <Route path='/product/:id' element={<ProductDetails />} />
           <Route element={<PrivateRoute />}>
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/profile' element={<Profile />} />
+            {/* <Route path='/profile' element={<Profile />} /> */}
           </Route>
           <Route path='*' element={<h1>Page not found</h1>} />
         </Routes>
