@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/users';
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 const api = axios.create({
   baseURL: API_URL,
@@ -26,10 +26,13 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (
-      originalRequest.url === '/login' ||
-      originalRequest.url === '/register'
-    ) {
+    const skipTokenRefresh =
+      originalRequest.url.includes('/login') ||
+      originalRequest.url.includes('/register') ||
+      originalRequest.url.includes('/refresh-token') ||
+      originalRequest.url.includes('/check-auth');
+
+    if (skipTokenRefresh) {
       return Promise.reject(error);
     }
 
@@ -46,13 +49,13 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        await api.get('/refresh-token');
+        await api.get('/users/refresh-token');
         processQueue(null);
         return api(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError);
         localStorage.removeItem('persist:root');
-        window.location.href = '/login';
+        window.location.href = '/home';
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
