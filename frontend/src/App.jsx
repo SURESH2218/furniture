@@ -1,43 +1,26 @@
 import Home from './pages/home';
 import Shop from './pages/shop';
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor } from './store/store';
-
-import { verifyAuth } from './store/slices/authSlice';
 
 import Login from './auth/Login';
 import Register from './auth/Register';
 import Profile from './pages/user/Profile';
 import ProductList from './pages/public/ProductLIst';
-// import Dashboard from './pages/user/Dashboard';
+import ProductDetails from './pages/public/ProductDetails';
+import { PrivateRoute } from './routes/PrivateRoute';
+import Dashboard from './pages/user/Dashboard';
 
 function App() {
-  const dispatch = useDispatch();
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    // console.log('useEffect Called');
-    const isPublicRoute =
-      location.pathname === '/login' || location.pathname === '/register';
-
-    const persistedAuth = localStorage.getItem('persist:root');
-    if (persistedAuth && !isPublicRoute) {
-      const parsedAuth = JSON.parse(persistedAuth);
-      const authState = JSON.parse(parsedAuth.auth);
-
-      if (authState.isAuthenticated || !user) {
-        dispatch(verifyAuth());
-      }
-    }
-  }, [location.pathname]);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   return (
     <PersistGate loading={null} persistor={persistor}>
@@ -55,17 +38,16 @@ function App() {
               isAuthenticated ? <Navigate to='/home' replace /> : <Register />
             }
           />
-          <Route
-            path='/profile'
-            element={
-              isAuthenticated ? <Profile /> : <Navigate to='/login' replace />
-            }
-          />
           <Route path='/' element={<Navigate to={'/home'} />} />
           <Route path='/home' element={<Home />} />
           <Route path='/shop' element={<Shop />} />
-          <Route path='*' element={<h1>Page not found</h1>} />
           <Route path='/products' element={<ProductList />} />
+          <Route path='/product/:id' element={<ProductDetails />} />
+          <Route element={<PrivateRoute />}>
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/profile' element={<Profile />} />
+          </Route>
+          <Route path='*' element={<h1>Page not found</h1>} />
         </Routes>
       </Router>
     </PersistGate>
