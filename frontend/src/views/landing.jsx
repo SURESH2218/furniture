@@ -40,7 +40,10 @@ export default function Landing() {
               The works are just amazing.{' '}
             </p>
             <div className='flex gap-2 mt-[10px]'>
-              <HButton content={'Explore'}></HButton>
+              <HButton
+                content={'Explore'}
+                onClick={() => navigate('/products')}
+              ></HButton>
               <HButton
                 content={'Shop'}
                 onClick={() => {
