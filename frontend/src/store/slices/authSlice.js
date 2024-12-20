@@ -6,7 +6,7 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const response = await api.post(
-        '/login',
+        '/users/login',
         { email, password },
         {
           withCredentials: true,
@@ -23,7 +23,7 @@ export const registerUser = createAsyncThunk(
   'auth/register',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/register', userData, {
+      const response = await api.post('/users/register', userData, {
         withCredentials: true,
       });
       console.log(response.data);
@@ -41,7 +41,7 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await api.post(
-        '/logout',
+        '/users/logout',
         {},
         {
           withCredentials: true,
@@ -58,7 +58,7 @@ export const verifyAuth = createAsyncThunk(
   'auth/verify',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/check-auth', {
+      const response = await api.get('/users/check-auth', {
         withCredentials: true,
       });
       return response.data;
