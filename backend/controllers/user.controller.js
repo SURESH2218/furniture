@@ -11,6 +11,7 @@ import ApiResponse from "../utils/ApiResponse.js";
 import ApiError from "../utils/ApiError.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import prisma from "../prisma/client.js";
+import bcrypt from "bcrypt";
 
 const userRegister = asyncHandler(async (req, res) => {
   const { email, password, name } = req.body;
@@ -182,28 +183,38 @@ export const changePassword = asyncHandler(async (req, res) => {
   const { currentPassword, newPassword } = req.body;
   const { user } = req;
 
-  if (!currentPassword || !newPassword) {
-    throw ApiError(400, "Both current password and new password are required");
+  try {
+    if (!currentPassword || !newPassword) {
+      throw ApiError(
+        400,
+        "Both current password and new password are required"
+      );
+    }
+
+    const existingUser = await findUserByEmail(user.email);
+
+    if (!existingUser) {
+      throw ApiError(404, "User not found");
+    }
+
+    const isMatch = await isPasswordValid(
+      currentPassword,
+      existingUser.password
+    );
+    if (!isMatch) {
+      throw ApiError(401, "Current password is incorrect");
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await updatePassword(user.email, hashedPassword);
+
+    return res
+      .status(200)
+      .json(ApiResponse(200, {}, "Password Updated Successfully"));
+  } catch (error) {
+    throw new Error("Error changing password: ", error);
   }
-
-  const existingUser = await findUserByEmail(user.email);
-
-  if (!existingUser) {
-    throw ApiError(404, "User not found");
-  }
-
-  const isMatch = await isPasswordValid(currentPassword, existingUser.password);
-  if (!isMatch) {
-    throw ApiError(401, "Current password is incorrect");
-  }
-
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-  await updatePassword(user.email, hashedPassword);
-
-  return res
-    .status(200)
-    .json(ApiResponse(200, {}, "Password Updated Successfully"));
 });
 
 export const updatePassword = async (email, hashedPassword) => {
