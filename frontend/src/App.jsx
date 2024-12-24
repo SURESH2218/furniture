@@ -18,6 +18,7 @@ import ProductList from './pages/public/ProductLIst';
 import ProductDetails from './pages/public/ProductDetails';
 import { PrivateRoute } from './routes/PrivateRoute';
 import Dashboard from './pages/user/Dashboard';
+import AdminRoute from './routes/AdminRoute';
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -47,6 +48,7 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />} />
             {/* <Route path='/profile' element={<Profile />} /> */}
           </Route>
+          <Route element={<AdminRoute />}></Route>
           <Route path='*' element={<h1>Page not found</h1>} />
         </Routes>
       </Router>
