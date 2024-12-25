@@ -11,6 +11,14 @@ export const theme = {
         foreground: 'var(--secondary-foreground)',
       },
     },
+    fontSize: {
+      sm: 'var(--font-sm)',
+      md: 'var(--font-md)',
+      lg: 'var(--font-lg)',
+      xl: 'var(--font-xl)',
+      sub: 'var(--font-sub)',
+      head: 'var(--font-head)',
+    },
   },
 };
 export const plugins = [];

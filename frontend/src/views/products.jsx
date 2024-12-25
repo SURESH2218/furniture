@@ -10,103 +10,52 @@ import PropTypes from 'prop-types';
 import displayImg from '../assets/images/flat-1.jpg';
 // import woodtexture from '../assets/images/woodtexture.jpg'
 import { ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 export default function Products() {
-  const [swingflag, setswingflag] = useState(false);
-  const [diningflag, setdiningflag] = useState(false);
-  const [mandirflag, setmandirflag] = useState(false);
-  const [doorflag, setdoorflag] = useState(false);
-  const [sofaflag, setsofaflag] = useState(false);
-  const [dewanflag, setdewanflag] = useState(false);
-  const [cupboardflag, setcupboardflag] = useState(false);
-  const [bedflag, setbedflag] = useState(false);
-
   return (
     <div className='relative w-[100vw] h-auto flex-col flex justify-center items-center'>
-      <div className='relative w-full h-[100vh] p-[2%] flex justify-center items-center'>
-        <div className='w-full h-full grid grid-cols-12 grid-rows-12'>
+      <div className='relative w-[100vw] h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] xl:h-[100vh] p-[2%] flex justify-center items-center'>
+        <div className='w-full h-full grid grid-cols-12 grid-rows-12 sm:gap-0'>
           <Itemdisplay
             cols={'col-span-4'}
             rows={'row-span-5'}
-            onMouseEnter={() => {
-              setswingflag(true);
-            }}
-            onMouseLeave={() => {
-              setswingflag(false);
-            }}
             item={swing}
             itemName={'swing'}
-            flag={swingflag}
           />
           <Itemdisplay
             cols={'col-span-5'}
             rows={'row-span-5'}
-            onMouseEnter={() => {
-              setcupboardflag(true);
-            }}
-            onMouseLeave={() => {
-              setcupboardflag(false);
-            }}
             item={cupboard}
             itemName={'cupboard'}
-            flag={cupboardflag}
           />
           <Itemdisplay
             cols={'col-span-3'}
             rows={'row-span-7'}
-            onMouseEnter={() => {
-              setmandirflag(true);
-            }}
-            onMouseLeave={() => {
-              setmandirflag(false);
-            }}
             item={mandir}
             itemName={'madir'}
-            flag={mandirflag}
           />
           <Itemdisplay
             cols={'col-span-3'}
             rows={'row-span-8'}
-            onMouseEnter={() => {
-              setdoorflag(true);
-            }}
-            onMouseLeave={() => {
-              setdoorflag(false);
-            }}
             item={door}
             itemName={'door'}
-            flag={doorflag}
           />
 
           <Itemdisplay
             cols={'col-span-3'}
             rows={'row-span-4'}
-            onMouseEnter={() => {
-              setbedflag(true);
-            }}
-            onMouseLeave={() => {
-              setbedflag(false);
-            }}
             item={bed}
             itemName={'bed'}
-            flag={bedflag}
           />
           <Itemdisplay
             cols={'col-span-3'}
             rows={'row-span-3'}
-            onMouseEnter={() => {
-              setsofaflag(true);
-            }}
-            onMouseLeave={() => {
-              setsofaflag(false);
-            }}
             item={sofa}
             itemName={'sofa'}
-            flag={sofaflag}
           />
 
-          <div className=' overflow-hidden p-3  hover:p-0  transition-all duration-500  col-span-3 row-span-5 relative text-white/50 hover:text-white'>
-            <div className='w-full h-full bg-white/10 rounded-md flex justify-center items-center flex-col'>
+          <div className=' overflow-hidden rounded-sm p-[2px]  sm:p-[5px]  transition-all duration-500  col-span-3 row-span-5 relative text-white/50 hover:text-white'>
+            <div className='w-full h-full bg-white/10 rounded-sm  flex justify-center items-center flex-col text-lg'>
               <p>Many more items .....</p>
               <p>Visit Store &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt;</p>
             </div>
@@ -115,34 +64,20 @@ export default function Products() {
           <Itemdisplay
             cols={'col-span-3'}
             rows={'row-span-4'}
-            onMouseEnter={() => {
-              setdiningflag(true);
-            }}
-            onMouseLeave={() => {
-              setdiningflag(false);
-            }}
             item={dining}
             itemName={'dining'}
-            flag={diningflag}
           />
           <Itemdisplay
             cols={'col-span-3'}
             rows={'row-span-3'}
-            onMouseEnter={() => {
-              setdewanflag(true);
-            }}
-            onMouseLeave={() => {
-              setdewanflag(false);
-            }}
             item={dewan}
             itemName={'dewan'}
-            flag={dewanflag}
           />
         </div>
       </div>
-      <div className='relative w-[100vw] h-[100vh] py-[5%] grid grid-cols-2'>
+      <div className='relative w-[100vw] h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] xl:h-[100vh] py-[5%] grid grid-cols-2'>
         <div className='col-span-1 relative flex items-center justify-center'>
-          <div className='w-[70%] h-[90%] relative bg-blue-200 rounded-md overflow-hidden'>
+          <div className='w-[80%] h-[90%] relative rounded-md overflow-hidden'>
             <div className='w-full h-full bg-black/40 absolute z-20'></div>
             <img
               src={displayImg}
@@ -152,9 +87,9 @@ export default function Products() {
           </div>
         </div>
         <div className='col-span-1 flex justify-center items-center pr-[5%]'>
-          <div className='flex flex-col gap-10 w-[80%] '>
-            <h1 className='text-[35px]'>Woodwork for Building Projects</h1>
-            <p className=' text-justify'>
+          <div className='flex flex-col gap-2 w-[80%] '>
+            <h1 className='text-sub'>Woodwork for Building Projects</h1>
+            <p className=' text-justify text-md'>
               We also specialize in providing comprehensive contract-based
               woodwork services for entire buildings during construction. Our
               expertise includes crafting and installing wooden frames for doors
@@ -175,48 +110,78 @@ export default function Products() {
   );
 }
 
-function Itemdisplay({
-  cols,
-  rows,
-  onMouseEnter,
-  onMouseLeave,
-  item,
-  itemName,
-  flag,
-}) {
+function Itemdisplay({ cols, rows, item, itemName }) {
+  const [hover, setHover] = useState(false);
+  const [supportsHover, setSupportsHover] = useState(false);
+  const [iconSize, setIconSize] = useState(10);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+    setSupportsHover(mediaQuery.matches);
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    mediaQuery.addEventListener('change', (e) => setSupportsHover(e.matches));
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      mediaQuery.removeEventListener('change', (e) =>
+        setSupportsHover(e.matches)
+      );
+    };
+  }, []);
+
+  const handleResize = () => {
+    const width = window.innerWidth;
+    if (width >= 1536) setIconSize(35);
+    else if (width >= 1280) setIconSize(30);
+    else if (width >= 1024) setIconSize(25);
+    else if (width >= 768) setIconSize(20);
+    else if (width >= 640) setIconSize(15);
+    else setIconSize(10);
+  };
+
   return (
     <div
-      className={`relative overflow-hidden p-3  hover:p-0  transition-all duration-500  ${cols} ${rows} rounded-md`}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      className={`relative overflow-hidden transition-all duration-500 ${cols} ${rows} ${supportsHover? `${hover? 'p-0' : 'p-[5px]'}`: 'p-[2px]'}  left-0
+`}
+      onMouseEnter={() => supportsHover && setHover(true)}
+      onMouseLeave={() => supportsHover && setHover(false)}
     >
-      <div className='absolute w-full h-full z-50 bg-black/50 hover:bg-transparent tansition-all duration-500'></div>
+      <div
+        className={`absolute w-full h-full top-0 left-0 z-50 ${
+          supportsHover ? 'bg-black/50 hover:bg-transparent' : ''
+        } transition-all duration-500`}
+      />
+
       <img
         src={item}
-        className=' w-full h-full object-cover rounded-md'
-        alt={`${itemName}`}
+        className='w-full h-full object-cover rounded-sm sm:rounded-md'
+        alt={itemName}
       />
+
       <div
-        className={`flex justify-around bg-black/30 items-center w-full h-[75px] absolute transition-all rounded-b-md duration-500 z-50 ${flag ? 'bottom-[-5px]' : 'bottom-[-50%]'} `}
-        style={{
-          backdropFilter: 'blur(5px)',
-        }}
+        className={`w-full h-[18px] sm:h-[35px] md:h-[45px] lg:h-[60px] xl:h-[70px] 2xl:h-[80px] 
+        overflow-hidden absolute  transition-all duration-500 z-50 
+
+        ${supportsHover ? `${hover ? 'bottom-0' : 'bottom-[-50%]'}` : 'bottom-0 px-[2px] pb-[2px]'} left-0`}
       >
-        <p className='text-[30px] flex items-center font-semibold capitalize'>
-          {itemName}
-        </p>
-        <ChevronRight />
+        <div
+          className='relative w-full h-full flex justify-around items-center rounded-b-sm sm:rounded-b-md bg-black/30'
+          style={{ backdropFilter: 'blur(2px)' }}
+        >
+          <p className='text-lg flex items-center font-semibold capitalize'>
+            {itemName}
+          </p>
+          <ChevronRight size={iconSize} />
+        </div>
       </div>
     </div>
   );
 }
-
 Itemdisplay.propTypes = {
   cols: PropTypes.string,
   rows: PropTypes.string,
-  onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func,
   item: PropTypes.string,
   itemName: PropTypes.string,
-  flag: PropTypes.bool,
 };

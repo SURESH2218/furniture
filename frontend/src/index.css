@@ -7,4 +7,71 @@
   --secondary: beige;
   --primary-foreground: beige;
   --secondary-foreground: black;
+
+  --font-sm: 0.25rem;
+  --font-md: 0.425rem;
+  --font-lg: 0.5rem;
+  --font-xl: 0.725rem;
+  --font-sub: 0.6rem;
+  --font-head: 1.25rem;
+}
+
+/* for tablets portrait  mode  */
+@media (min-width: 640px) {
+  :root {
+    --font-sm: 0.45rem;
+    --font-md: 0.625rem;
+    --font-lg: 1rem;
+    --font-xl: 1.5rem;
+    --font-sub: 1rem;
+    --font-head: 2.25rem;
+  }
+}
+
+/* for tablets in landscape or small laptops  */
+@media (min-width: 768px) {
+  :root {
+    --font-sm: 0.5rem;
+    --font-md: 0.825rem;
+    --font-lg: 1rem;
+    --font-xl: 1.75rem;
+    --font-sub: 1.25rem;
+    --font-head: 2.5rem;
+  }
+}
+
+/*  for standard desktops or laptops  */
+@media (min-width: 1024px) {
+  :root {
+    --font-sm: 0.725rem;
+    --font-md: 0.825rem;
+    --font-lg: 1rem;
+    --font-xl: 1.75rem;
+    --font-sub: 1.625rem;
+    --font-head: 2rem;
+  }
+}
+
+/* for larger screens  */
+@media (min-width: 1280px) {
+  :root {
+    --font-sm: 0.725rem;
+    --font-md: 1rem;
+    --font-lg: 1.25rem;
+    --font-xl: 1.75rem;
+    --font-sub: 1.825rem;
+    --font-head: 2.5rem;
+  }
+}
+
+/* ultra wide monitors ? necessary?*/
+@media (min-width: 1536px) {
+  :root {
+    --font-sm: 0.825rem;
+    --font-md: 1rem;
+    --font-lg: 1.5rem;
+    --font-xl: 1.75rem;
+    --font-sub: 2.25rem;
+    --font-head: 2.5rem;
+  }
 }

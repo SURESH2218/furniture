@@ -17,10 +17,7 @@ export default function Shop() {
   return (
     <div className='w-[100vw] h-[100vh] relative overflow-x-hidden hidden-scrollbar'>
       <div className='w-full h-[10vh] bg-black sticky top-0 flex justify-between items-center px-[20px]'>
-        <h1
-          onClick={() => navigate('/')}
-          className='cursor-pointer text-[24px]'
-        >
+        <h1 onClick={() => navigate('/')} className='cursor-pointer text-xl'>
           SREE SAI BALAJI WOOD WORKS
         </h1>
         <div className='w-[30%] absolute left-1/2 -translate-x-1/2'>

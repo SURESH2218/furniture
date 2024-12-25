@@ -1,11 +1,13 @@
 import displayImg from '../assets/images/chair-2.jpg';
 export default function Aboutus() {
   return (
-    <div className='relative w-[100vw] h-[100vh] py-[5%] grid grid-cols-2'>
+    <div className='relative w-[100vw] h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] xl:h-[100vh] py-[5%] grid grid-cols-2'>
       <div className='col-span-1 flex justify-center items-center pl-[5%]'>
-        <div className='flex flex-col gap-10 w-[80%] '>
-          <h1 className='text-[35px]'>Crafting Timeless Wooden Solutions</h1>
-          <p className=' text-justify'>
+        <div className='flex flex-col gap-2 w-[80%] '>
+          <h1 className='text-sub text-nowrap'>
+            Crafting Timeless Wooden Solutions
+          </h1>
+          <p className=' text-justify text-md'>
             For over 35 years, Sree Sai Balaji Wood Works has been a trusted
             name in Vijayawada, Andhra Pradesh, known for delivering
             high-quality woodwork tailored to customer needs. Led by Durga
@@ -23,7 +25,7 @@ export default function Aboutus() {
         </div>
       </div>
       <div className='col-span-1 relative flex items-center justify-center '>
-        <div className='w-[70%] h-[90%] relative bg-blue-200 rounded-md overflow-hidden'>
+        <div className='w-[70%] h-[90%] relative rounded-md overflow-hidden'>
           <div className='w-full h-full bg-black/40 absolute z-20'></div>
           <img
             src={displayImg}
