@@ -87,7 +87,7 @@ export default function Products() {
           </div>
         </div>
         <div className='col-span-1 flex justify-center items-center pr-[5%]'>
-          <div className='flex flex-col gap-2 w-[80%] '>
+          <div className='flex flex-col gap-2 sm:gap-6 md:gap-8 lg:gap-10 w-[80%] '>
             <h1 className='text-sub'>Woodwork for Building Projects</h1>
             <p className=' text-justify text-md'>
               We also specialize in providing comprehensive contract-based
