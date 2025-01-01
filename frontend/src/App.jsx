@@ -1,6 +1,5 @@
 import Home from './pages/home';
 import Shop from './pages/shop';
-import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,

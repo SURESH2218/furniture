@@ -4,20 +4,24 @@ import HButton from '../components/common/hvrbutton';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import gsap from 'gsap';
-import { useGSAP } from '@gsap/react'
+import { useGSAP } from '@gsap/react';
 export default function Landing() {
   const navigate = useNavigate();
-  useGSAP(()=>{
-    gsap.fromTo(['#productCard', '.subhead'],{
-      y: 20,
-      opacity: 0
-    },{
-      y:0,
-      opacity: 1,
-      duration: 1,
-      ease: 'slow'
-    })
-  })
+  useGSAP(() => {
+    gsap.fromTo(
+      ['#productCard', '.head'],
+      {
+        y: 20,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: 'slow',
+      }
+    );
+  });
   return (
     <div className='bg-inherit w-[100vw] h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] xl:h-[70vh] p-[2%] relative flex justify-center items-center'>
       <div
@@ -37,13 +41,13 @@ export default function Landing() {
       ></div>
       <div className='absolute z-30 w-full h-full grid grid-cols-2 p-[5%] sm:p-[5%]'>
         <div className='col-span-2 lg:col-span-1 relative flex flex-col justify-center gap-2 '>
-          <h1 className='text-head font-bold'>SREE BALAJI WOOD WORKS</h1>
-          <p className='text-lg subhead'  >
+          <h1 className='text-head font-bold head'>SREE BALAJI WOOD WORKS</h1>
+          <p className='text-lg head'>
             Delivering reliable and strong wood furniture from years.
             <br />
             The works are just amazing.{' '}
           </p>
-          <div className='flex gap-2 mt-[10px] subhead  '>
+          <div className='flex gap-2 mt-[10px] head  '>
             <HButton content={'Explore'}></HButton>
             <HButton
               content={'Shop'}
@@ -53,9 +57,12 @@ export default function Landing() {
             ></HButton>
           </div>
         </div>
-        <div className='hidden   lg:col-span-1 lg:flex justify-center items-center relative' id='productCard' >
+        <div
+          className='hidden   lg:col-span-1 lg:flex justify-center items-center relative'
+          id='productCard'
+        >
           <div
-            className='absolute w-[60%] h-[70%] rounded-md grid grid-rows-6 bg-white/20'
+            className='absolute w-[70%] h-[60%] 2xl:w-[60%] 2xl:h-[70%] rounded-md grid grid-rows-6 bg-white/20'
             style={{
               backdropFilter: 'blur(10px)',
             }}

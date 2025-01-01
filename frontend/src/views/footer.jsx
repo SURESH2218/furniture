@@ -1,7 +1,24 @@
 import { Facebook } from 'lucide-react';
 import { Instagram } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 export default function Footer() {
+  useGSAP(() => {
+    gsap.from('.footer', {
+      yPercent: '25',
+      opacity: 0,
+      duration: 1.5,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.footer',
+        start: 'top bottom',
+        once: true,
+      },
+    });
+  });
   const [iconSize, setIconSize] = useState(10);
   const handleResize = () => {
     const width = window.innerWidth;
@@ -25,7 +42,7 @@ export default function Footer() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   return (
-    <div className='w-[100vw] h-[15vh] sm:h-[18vh] md:h-[20vh] lg:h-[23vh] xl:h-[25vh] 2xl:h-[30vh]  relative bg-white/10 grid grid-cols-12'>
+    <div className='w-[100vw] h-[15vh] sm:h-[18vh] md:h-[20vh] lg:h-[23vh] xl:h-[25vh] 2xl:h-[30vh]  relative bg-white/10 grid grid-cols-12 footer'>
       <div className='col-span-3 p-2'>
         <h1 className='text-lg text-nowrap'>Sree Balaji Wood Works</h1>
         <p className='text-md'>
