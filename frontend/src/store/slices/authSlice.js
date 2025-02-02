@@ -12,6 +12,7 @@ export const loginUser = createAsyncThunk(
           withCredentials: true,
         }
       );
+      console.log(response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Login failed');
@@ -63,7 +64,7 @@ export const verifyAuth = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      return rejectWithValue(null);
+      return rejectWithValue(error);
     }
   }
 );

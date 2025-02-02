@@ -11,7 +11,7 @@
   --font-sm: 0.25rem;
   --font-md: 0.425rem;
   --font-lg: 0.5rem;
-  --font-xl: 0.725rem;
+  --font-xl: 1rem;
   --font-sub: 0.6rem;
   --font-head: 1.25rem;
 }
@@ -57,7 +57,7 @@
   :root {
     --font-sm: 0.725rem;
     --font-md: 1rem;
-    --font-lg: 1.25rem;
+    --font-lg: 1.5rem;
     --font-xl: 1.75rem;
     --font-sub: 1.825rem;
     --font-head: 2.5rem;

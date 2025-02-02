@@ -3,6 +3,7 @@ import {
   orderController,
   orderHistory,
   updateStatus,
+  getAllOrders,
 } from "../controllers/order.controller.js";
 import stripe from "../utils/stripe.config.js";
 import prisma from "../prisma/client.js";
@@ -50,5 +51,6 @@ router.post(
   updateStatus
 );
 router.get("/order-history/:userId", verifyJWT, orderHistory);
+router.get("/getallOrders", verifyJWT, authorizeRoles("ADMIN"), getAllOrders);
 
 export default router;

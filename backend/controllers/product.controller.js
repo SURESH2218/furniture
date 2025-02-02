@@ -125,14 +125,13 @@ export const getProductDetails = asyncHandler(async (req, res) => {
         },
       },
     });
-
     if (!product) {
       throw ApiError(404, "Product not found");
     }
 
     return res
       .status(200)
-      .json(ApiResponse(200, product, "Product details fetched successfully"));
+      .json(ApiResponse(200, {product,id}, "Product details fetched successfully"));
   } catch (error) {
     return res
       .status(500)

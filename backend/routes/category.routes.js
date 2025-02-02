@@ -9,8 +9,8 @@ import { authorizeRoles } from "../controllers/admin.controller.js";
 const router = Router();
 
 router
-  .route("/create-category")
+  .route("/createCategory")
   .post(verifyJWT, authorizeRoles("ADMIN"), createCategory);
-router.route("/get-categories").get(getCategories);
+router.route("/getCategories").get(getCategories);
 
 export default router;

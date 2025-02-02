@@ -98,3 +98,14 @@ export const orderHistory = asyncHandler(async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+export const getAllOrders = asyncHandler(async (req, res) => {
+  try {
+    const orders = await prisma.order.findMany({
+      include: { items: true },
+    });
+    res.status(200).json({ orders });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
